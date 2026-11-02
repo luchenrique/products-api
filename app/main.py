@@ -41,8 +41,3 @@ app = FastAPI(title="Products API", version="1.0.0", lifespan=lifespan)
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(products.router)
-
-
-@app.get("/health", tags=["health"])
-def health():
-    return {"status": "ok"}
