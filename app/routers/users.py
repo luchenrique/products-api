@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -31,3 +31,10 @@ def change_role(user_id: int, data: RoleUpdate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
     return user_out(user)
+
+@router.delete(
+    "/{user_id}", status_code=status.HTTP_204_NO_CONTENT
+)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    db.delete((db, user_id))
+    db.commit()
